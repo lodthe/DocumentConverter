@@ -3,6 +3,7 @@ import pypandoc
 import magic
 import mimetypes
 import io
+import os
 
 app = Flask(__name__)
 
@@ -17,18 +18,21 @@ TYPE_ALIAS = {
 @app.route('/convert/<output_type>', methods=['GET', 'POST'])
 def convert(output_type):
     if output_type not in TYPE_ALIAS:
-        abort(400)
+        abort(400, f'Output type {output_type} is not supported.')
 
     if request.method == 'POST':
         file = request.files['file']
 
         if file:
-            file_data = file.read()
-            file_mime = magic.from_buffer(file_data, mime=True)
-            file_extension = mimetypes.guess_extension(file_mime)[1:]
+            try:
+                file_data = file.read()
+                file_mime = magic.from_buffer(file_data, mime=True)
+                file_extension = mimetypes.guess_extension(file_mime)[1:]
+            except Exception:
+                abort(500, 'Can\'t identify file format.')
 
             if file_extension not in TYPE_ALIAS:
-                abort(400)
+                abort(400, f'File type {file_extension} is not supported.')
 
             file_extension = TYPE_ALIAS[file_extension]
 
@@ -59,4 +63,4 @@ def convert(output_type):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host=os.getenv('DC_HOST'), port=os.getenv('DC_PORT'))
