@@ -41,10 +41,14 @@ python -m flask run --host=127.0.0.2 --port=1234
 Формат запрос должен быть аналогичен формату отсылки файла через форму с именем *file*. Например, через форму вида `<input type=file name=file>`
 
 
-## Поддерживаемые форматы
+## Поддерживаемые варианты конвертации
 
-| html | docx | odt | markdown |
-|------|------|-----|----------|
+| Входной формат |      Выходные форматы      | 
+|----------------|----------------------------|
+| html           |html, markdown, plain       |
+| markdown       |markdown, html, plain       |
+| docx           |docx, html, markdown, plain |
+| odt            |odt, html, markdown, plain  |
 
 ## To-do
 - [x] Запускающееся приложение
