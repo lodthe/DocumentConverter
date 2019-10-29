@@ -1,13 +1,17 @@
 # DocumentConverter
+[![Build Status](https://travis-ci.com/LoDThe/DocumentConverter.svg?branch=master)](https://travis-ci.com/LoDThe/DocumentConverter)
 
 DocumentConverter представляет из себя реализацию http-сервиса для конвертации документов из одного формата в другой.
 
-Конвертация осуществляется с помощью посылки POST-запроса, содержащего файл, по url `http://<server-name>:<server-port>/convert/<output-type>`
+Конвертация осуществляется с помощью посылки POST-запроса, содержащего файл, по url 
+
+`http://<server-name>:<server-port>/convert/<output-type>`
 
 Подробнее о задании для курса *Методы разработки программного обесечения* можно прочитать [здесь](https://docs.google.com/document/d/1lDirPrxqhrIkkDXW3sbIWr6cRhFdlra0rSmd0RHjH8s/edit)
 
 Для создания сервиса выбран фреймворк [Flask](https://palletsprojects.com/p/flask/), библиотека для конвертации файлов - [Pandoc](https://pandoc.org/)
-Также используется Travis в качестве CI и pytest для тестирования.
+
+Также используется [Travis](https://travis-ci.com) в качестве CI и pytest для тестирования.
 
 ## Требования
 Python версии не менее 3.7, установленную библиотеку [Pandoc](https://pandoc.org/) и python-библиотеки из файла [requirements.txt](requirements.txt)

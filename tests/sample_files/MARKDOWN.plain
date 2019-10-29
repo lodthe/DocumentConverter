@@ -1,0 +1,64 @@
+
+
+DOCUMENTCONVERTER
+
+
+DocumentConverter представляет из себя реализацию http-сервиса для
+конвертации документов из одного формата в другой.
+
+Конвертация осуществляется с помощью посылки POST-запроса, содержащего
+файл, по url http://<server-name>:<server-port>/convert/<output-type>
+
+Подробнее о задании для курса _Методы разработки программного
+обесечения_ можно прочитать здесь
+
+Для создания сервиса выбран фреймворк Flask, библиотека для конвертации
+файлов - Pandoc
+
+
+Требования
+
+Python версии не менее 3.7, установленную библиотеку Pandoc и
+python-библиотеки из файла requirements.txt
+
+Пример установки библиотек:
+
+UBUNTU
+shell script apt-get install pandoc pip install -r requirements.txt ARCH
+shell script pacman -S pandoc pip install -r requirements.txt
+
+
+Использование
+
+shell script python -m flask run --host=127.0.0.2 --port=1234 Значения
+по умолчанию:
+
+  Переменная   Значение
+  ------------ -----------
+  host         127.0.0.1
+  port         5000
+
+Запускает приложение с возможностью отправлять POST-запрос, содержащего
+файл, по url http://host:port/convert/<output-type>
+
+Формат запрос должен быть аналогичен формату отсылки файла через форму с
+именем _file_. Например, через форму вида <input type=file name=file>
+
+
+Поддерживаемые варианты конвертации
+
+  Входной формат   Выходные форматы
+  ---------------- -----------------------------
+  html             html, markdown, plain
+  markdown         markdown, html, plain
+  docx             docx, html, markdown, plain
+  odt              odt, html, markdown, plain
+
+
+To-do
+
+-   ☒ Запускающееся приложение
+-   ☐ Сделать тесты
+-   ☐ Использовать Travis
+-   ☐ Добавить поддержку большего числа форматов
+-   ☐ Исправить идентификацию формата получаемового файла

@@ -15,7 +15,6 @@ TYPE_ALIAS = {
     'markdown': 'markdown',
     'odt': 'odt',
     'bat': 'markdown',
-    'txt': 'markdown',
     'plain': 'plain',
 }
 
@@ -41,13 +40,26 @@ def get_file_extension(file_data):
     return TYPE_ALIAS[file_extension]
 
 
-def convert_data(file, file_data, input_type, output_type):
+def convert_data(filename, file_data, input_type, output_type):
+    """
+    Return converted data from <input_type> format to <output_type>
+    Make aborts if file formats are not available
+    """
+    if input_type not in AVAILABLE_CONVERSIONS:
+        abort(400, f'Input type {input_type} is not supported.')
     if output_type not in AVAILABLE_CONVERSIONS[input_type]:
         abort(400, f'Conversion from {input_type} to {output_type} is not available.')
 
-    filename_without_extension = file.filename
-    if file.filename.endswith('.' + input_type): # Remove .extension from the end of file
-        filename_without_extension = file.filename[:-len(input_type) - 1]
+    # Return the same data, if output format is equal to input format
+    if input_type == output_type:
+        return send_file(io.BytesIO(file_data),
+                         mimetype=mimetypes.guess_type(filename)[0],
+                         as_attachment=True,
+                         attachment_filename=filename)
+
+    filename_without_extension = filename
+    if filename.endswith('.' + input_type): # Remove .extension from the end of file
+        filename_without_extension = filename[:-len(input_type) - 1]
 
     result_filename = f'{filename_without_extension}.{output_type}'
     converted_data = str.encode(pypandoc.convert(file_data, output_type, format=input_type))
@@ -65,12 +77,12 @@ def convert(output_type):
 
     if request.method == 'POST':
         file = request.files['file']
-        file_data = file.read()
 
         if file:
+            file_data = file.read()
             file_extension = get_file_extension(file_data)
 
-            return convert_data(file, file_data, file_extension, output_type)
+            return convert_data(file.filename, file_data, file_extension, output_type)
 
     # On GET query return form that allows to send a file
     return '''

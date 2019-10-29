@@ -1,0 +1,71 @@
+<h1 id="documentconverter">DocumentConverter</h1>
+<p>DocumentConverter представляет из себя реализацию http-сервиса для конвертации документов из одного формата в другой.</p>
+<p>Конвертация осуществляется с помощью посылки POST-запроса, содержащего файл, по url <code>http://&lt;server-name&gt;:&lt;server-port&gt;/convert/&lt;output-type&gt;</code></p>
+<p>Подробнее о задании для курса <em>Методы разработки программного обесечения</em> можно прочитать <a href="https://docs.google.com/document/d/1lDirPrxqhrIkkDXW3sbIWr6cRhFdlra0rSmd0RHjH8s/edit">здесь</a></p>
+<p>Для создания сервиса выбран фреймворк <a href="https://palletsprojects.com/p/flask/">Flask</a>, библиотека для конвертации файлов - <a href="https://pandoc.org/">Pandoc</a></p>
+<h2 id="требования">Требования</h2>
+<p>Python версии не менее 3.7, установленную библиотеку <a href="https://pandoc.org/">Pandoc</a> и python-библиотеки из файла <a href="requirements.txt">requirements.txt</a></p>
+<p>Пример установки библиотек:</p>
+<p><strong>Ubuntu</strong> <code>shell script apt-get install pandoc pip install -r requirements.txt</code> <strong>Arch</strong> <code>shell script pacman -S pandoc pip install -r requirements.txt</code></p>
+<h2 id="использование">Использование</h2>
+<p><code>shell script python -m flask run --host=127.0.0.2 --port=1234</code> Значения по умолчанию:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Переменная</th>
+<th>Значение</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>host</td>
+<td>127.0.0.1</td>
+</tr>
+<tr class="even">
+<td>port</td>
+<td>5000</td>
+</tr>
+</tbody>
+</table>
+<p>Запускает приложение с возможностью отправлять POST-запрос, содержащего файл, по url <code>http://host:port/convert/&lt;output-type&gt;</code></p>
+<p>Формат запрос должен быть аналогичен формату отсылки файла через форму с именем <em>file</em>. Например, через форму вида <code>&lt;input type=file name=file&gt;</code></p>
+<h2 id="поддерживаемые-варианты-конвертации">Поддерживаемые варианты конвертации</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Входной формат</th>
+<th>Выходные форматы</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>html</td>
+<td>html, markdown, plain</td>
+</tr>
+<tr class="even">
+<td>markdown</td>
+<td>markdown, html, plain</td>
+</tr>
+<tr class="odd">
+<td>docx</td>
+<td>docx, html, markdown, plain</td>
+</tr>
+<tr class="even">
+<td>odt</td>
+<td>odt, html, markdown, plain</td>
+</tr>
+</tbody>
+</table>
+<h2 id="to-do">To-do</h2>
+<ul>
+<li><input type="checkbox" disabled="" checked="" />
+Запускающееся приложение</li>
+<li><input type="checkbox" disabled="" />
+Сделать тесты</li>
+<li><input type="checkbox" disabled="" />
+Использовать Travis</li>
+<li><input type="checkbox" disabled="" />
+Добавить поддержку большего числа форматов</li>
+<li><input type="checkbox" disabled="" />
+Исправить идентификацию формата получаемового файла</li>
+</ul>
