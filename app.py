@@ -15,6 +15,7 @@ TYPE_ALIAS = {
     'markdown': 'markdown',
     'odt': 'odt',
     'bat': 'markdown',
+    'txt': 'markdown',
     'plain': 'plain',
 }
 
@@ -26,6 +27,37 @@ AVAILABLE_CONVERSIONS = {
     'odt': ('odt', 'html', 'markdown', 'plain'),
 }
 
+
+def get_file_extension(file_data):
+    try:
+        file_mime = magic.from_buffer(file_data, mime=True)
+        file_extension = mimetypes.guess_extension(file_mime)[1:]
+    except Exception:
+        abort(400, 'Can\'t identify the file format.')
+
+    if file_extension not in TYPE_ALIAS:
+        abort(400, f'Input type {file_extension} is not supported.')
+
+    return TYPE_ALIAS[file_extension]
+
+
+def convert_data(file, file_data, input_type, output_type):
+    if output_type not in AVAILABLE_CONVERSIONS[input_type]:
+        abort(400, f'Conversion from {input_type} to {output_type} is not available.')
+
+    filename_without_extension = file.filename
+    if file.filename.endswith('.' + input_type): # Remove .extension from the end of file
+        filename_without_extension = file.filename[:-len(input_type) - 1]
+
+    result_filename = f'{filename_without_extension}.{output_type}'
+    converted_data = str.encode(pypandoc.convert(file_data, output_type, format=input_type))
+
+    return send_file(io.BytesIO(converted_data),
+                     mimetype=mimetypes.guess_type(result_filename)[0],
+                     as_attachment=True,
+                     attachment_filename=result_filename)
+
+
 @app.route('/convert/<output_type>', methods=['GET', 'POST'])
 def convert(output_type):
     if output_type not in TYPE_ALIAS:
@@ -33,37 +65,12 @@ def convert(output_type):
 
     if request.method == 'POST':
         file = request.files['file']
+        file_data = file.read()
 
         if file:
-            try:
-                # Guess mime form file data, file extension from mime
-                file_data = file.read()
-                file_mime = magic.from_buffer(file_data, mime=True)
-                file_extension = mimetypes.guess_extension(file_mime)[1:]
-            except Exception:
-                abort(400, 'Can\'t identify the file format.')
+            file_extension = get_file_extension(file_data)
 
-            if file_extension not in TYPE_ALIAS:
-                abort(400, f'Input type {file_extension} is not supported.')
-            file_extension = TYPE_ALIAS[file_extension]
-
-            if output_type not in AVAILABLE_CONVERSIONS[file_extension]:
-                abort(400, f'Conversion from {file_extension} to {output_type} is not available.')
-
-            filename_without_extension = file.filename
-
-            if file.filename.endswith('.' + file_extension):
-                filename_without_extension = file.filename[:-len(file_extension) - 1]
-
-            result_filename = f'{filename_without_extension}.{output_type}'
-            converted_data = str.encode(pypandoc.convert(file_data,
-                                                         output_type,
-                                                         format=file_extension))
-
-            return send_file(io.BytesIO(converted_data),
-                             mimetype=mimetypes.guess_type(result_filename)[0],
-                             as_attachment=True,
-                             attachment_filename=result_filename)
+            return convert_data(file, file_data, file_extension, output_type)
 
     # On GET query return form that allows to send a file
     return '''
