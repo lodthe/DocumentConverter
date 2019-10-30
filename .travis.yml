@@ -7,8 +7,13 @@ python:
   - "3.7"
   - "3.8"
 
+before_install:
+  - sudo apt-get -y install pandoc
+addons:
+  apt:
+    update: true
+
 install:
-  - apt-get install pandoc
   - pip install -r requirements.txt
   - pip install -r requirements-dev.txt
 
