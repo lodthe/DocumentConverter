@@ -15,6 +15,7 @@ TYPE_ALIAS = {
     'markdown': 'markdown',
     'odt': 'odt',
     'bat': 'markdown',
+    'txt': 'markdown',
     'plain': 'plain',
 }
 

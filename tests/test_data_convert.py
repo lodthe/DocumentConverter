@@ -36,8 +36,5 @@ def test_to_markdown():
     assert get_file_data('ODT.markdown') == get_response('ODT', 'markdown').content
 
 
-def test_from_json():
-    assert get_response('JSON', 'html').status_code == 400
-
 def test_wrong_output_format():
     assert get_response('HTML', 'undefined_format').status_code == 400

@@ -3,12 +3,17 @@ language: python
 os:
   - linux
 
+dist: bionic
+
 python:
   - "3.7"
   - "3.8"
 
 before_install:
-  - sudo apt-get -y install pandoc
+  - sudo apt-get install wget
+  - wget https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb
+  - sudo dpkg --install pandoc-2.7.3-1-amd64.deb
+
 addons:
   apt:
     update: true
@@ -18,8 +23,8 @@ install:
   - pip install -r requirements-dev.txt
 
 script:
-  - python -m flask run
-  - pytest
+  - python -m flask run & pytest
+
 
 env:
   - PYTHONPATH=.
