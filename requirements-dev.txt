@@ -1,2 +1,13 @@
+Click==7.0
+Flask==1.1.1
+itsdangerous==1.1.0
+Jinja2==2.10.3
+MarkupSafe==1.1.1
+pandoc==1.0.2
+ply==3.11
+pypandoc==1.4
+python-magic==0.4.15
+Werkzeug==0.16.0
 pytest==5.2.2
-requests==2.22.0
+pytest-cov==2.8.1
+codecov==2.0.15

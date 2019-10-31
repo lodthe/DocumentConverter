@@ -1,5 +1,6 @@
 # DocumentConverter
 [![Build Status](https://travis-ci.com/LoDThe/DocumentConverter.svg?branch=master)](https://travis-ci.com/LoDThe/DocumentConverter)
+[![codecov](https://codecov.io/gh/LoDThe/DocumentConverter/branch/master/graph/badge.svg)](https://codecov.io/gh/LoDThe/DocumentConverter)
 
 DocumentConverter представляет из себя реализацию http-сервиса для конвертации документов из одного формата в другой.
 
@@ -30,8 +31,9 @@ pip install -r requirements.txt
 ```
 
 ## Использование
+Запуск в папке `src`
 ```shell script
-python -m flask run --host=127.0.0.2 --port=1234
+flask run --host=127.0.0.2 --port=1234
 ```
 Значения по умолчанию:
 
@@ -45,7 +47,7 @@ python -m flask run --host=127.0.0.2 --port=1234
 
 Формат запрос должен быть аналогичен формату отсылки файла через форму с именем *file*. Например, через форму вида `<input type=file name=file>`
 
-
+Отослать файл для конвертации можно по url `http://host:port/<output-type>`
 ## Поддерживаемые варианты конвертации
 
 | Входной формат |      Выходные форматы      | 
@@ -57,7 +59,10 @@ python -m flask run --host=127.0.0.2 --port=1234
 
 ## To-do
 - [x] Запускающееся приложение
-- [ ] Сделать тесты
-- [ ] Использовать Travis
+- [x] Сделать тесты
+  - [x] Unit тесты
+  - [x] Интеграционные тесты
+- [x] Использовать codecov
+- [x] Использовать Travis
 - [ ] Добавить поддержку большего числа форматов
-- [ ] Исправить идентификацию формата получаемового файла
+- [x] Исправить идентификацию формата получаемового файла
