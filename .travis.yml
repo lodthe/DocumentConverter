@@ -22,7 +22,7 @@ install:
   - pip install -r requirements-dev.txt
 
 script:
-  - flask run & pytest --cov=./src tests/
+  - pytest --cov=./src tests/
 
 after_success:
   - codecov
