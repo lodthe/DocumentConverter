@@ -1,10 +1,8 @@
-from flask import Flask, request, send_file, abort, render_template
-import pypandoc
+from flask import Flask, request, abort, render_template
 import magic
 import mimetypes
-import io
 
-from src import config
+from src import config, converter
 
 app = Flask(__name__)
 
@@ -21,31 +19,6 @@ def get_file_extension(file_data):
     return config.TYPE_ALIAS[file_extension]
 
 
-def convert_data(filename, file_data, input_type, output_type):
-    """
-    Return converted data from <input_type> format to <output_type>
-    Make aborts if file formats are not available
-    """
-    if input_type not in config.AVAILABLE_CONVERSIONS:
-        abort(400, f'Input type {input_type} is not supported.')
-    if output_type not in config.AVAILABLE_CONVERSIONS[input_type]:
-        abort(400, f'Conversion from {input_type} to {output_type} is not available.')
-
-    if input_type == output_type:
-        return send_file(io.BytesIO(file_data), as_attachment=True, attachment_filename=filename)
-
-    filename_without_extension = filename
-    if filename.endswith('.' + input_type):  # Remove .extension from the end of file
-        filename_without_extension = filename[:-len(input_type) - 1]
-
-    result_filename = f'{filename_without_extension}.{output_type}'
-    converted_data = str.encode(pypandoc.convert(file_data, output_type, format=input_type))
-
-    return send_file(io.BytesIO(converted_data),
-                     as_attachment=True,
-                     attachment_filename=result_filename)
-
-
 @app.route('/convert/<output_type>', methods=['POST'])
 def convert(output_type):
     if output_type not in config.TYPE_ALIAS:
@@ -57,7 +30,7 @@ def convert(output_type):
     file_data = file.read()
     file_extension = get_file_extension(file_data)
 
-    return convert_data(file.filename, file_data, file_extension, output_type)
+    return converter.convert_data(file.filename, file_data, file_extension, output_type)
 
 
 @app.route('/<output_type>', methods=['GET'])
