@@ -2,22 +2,22 @@
 [![Build Status](https://travis-ci.com/LoDThe/DocumentConverter.svg?branch=master)](https://travis-ci.com/LoDThe/DocumentConverter)
 [![codecov](https://codecov.io/gh/LoDThe/DocumentConverter/branch/master/graph/badge.svg)](https://codecov.io/gh/LoDThe/DocumentConverter)
     
-DocumentConverter представляет из себя реализацию http-сервиса для конвертации документов из одного формата в другой.
+DocumentConverter is a simple realization of web-application, which purpose is converting document between different types
 
-Конвертация осуществляется с помощью посылки POST-запроса, содержащего файл, по url 
+To convert a document you need to execute a POST query with file by following URL
 
 `http://<server-name>:<server-port>/convert/<output-type>`
 
-Подробнее о задании для курса *Методы разработки программного обесечения* можно прочитать [здесь](https://docs.google.com/document/d/1lDirPrxqhrIkkDXW3sbIWr6cRhFdlra0rSmd0RHjH8s/edit)
+You can read task description in more details [here](https://docs.google.com/document/d/1lDirPrxqhrIkkDXW3sbIWr6cRhFdlra0rSmd0RHjH8s/edit) (RUSSIAN LANGUAGE)
 
-Для создания сервиса выбран фреймворк [Flask](https://palletsprojects.com/p/flask/), библиотека для конвертации файлов - [Pandoc](https://pandoc.org/)
+[Flask](https://palletsprojects.com/p/flask/) was chosen as web-application creating framework, [Pandoc](https://pandoc.org/) as files convertation library.
 
-Также используется [Travis](https://travis-ci.com) в качестве CI и pytest для тестирования.
+There is [Travis](https://travis-ci.com) as CI and pytest as a testing tool also.
 
-## Требования
-Python версии не менее 3.7, установленную библиотеку [Pandoc](https://pandoc.org/) и python-библиотеки из файла [requirements.txt](requirements.txt)
+## Requirements
+Python at least 3.7 version, installed [Pandoc](https://pandoc.org/) library and python-libraries from [requirements.txt](requirements.txt)
 
-Пример установки библиотек:
+Example of requirements installing:
 
 **Ubuntu**
 ```shell script
@@ -30,27 +30,29 @@ pacman -S pandoc
 pip install -r requirements.txt
 ```
 
-## Использование
-Запуск в папке `src`
+## How to use it?
+Execute is `src` directory
 ```shell script
 flask run --host=127.0.0.2 --port=1234
 ```
-Значения по умолчанию:
+Default arguments:
 
-| Переменная | Значение  |
+| Variable   | Value     |
 |------------|-----------|
 | host       | 127.0.0.1 |
 | port       | 5000      |
 
-Запускает приложение с возможностью отправлять POST-запрос, содержащего файл, по url 
+By following link you can receive available conversions list in JSON format:
+```http://host:port/get_available_conversions```
+
+This will run application with possibility of execution POST queries by the following URL
 ```http://host:port/convert/<output-type>```
 
-Формат запрос должен быть аналогичен формату отсылки файла через форму с именем *file*. Например, через форму вида `<input type=file name=file>`
+Query should be execute like it's user is sending file from input form with name *file*. For instance, through the html form `<input type=file name=file>`
 
-Отослать файл для конвертации можно по url `http://host:port/<output-type>`
-## Поддерживаемые варианты конвертации
+## Available conversion types
 
-| Входной формат |      Выходные форматы      | 
+| Input format   |      Output formats      | 
 |----------------|----------------------------|
 | html           |html, markdown, plain       |
 | markdown       |markdown, html, plain       |
@@ -58,11 +60,10 @@ flask run --host=127.0.0.2 --port=1234
 | odt            |odt, html, markdown, plain  |
 
 ## To-do
-- [x] Запускающееся приложение
-- [x] Сделать тесты
-  - [x] Unit тесты
-  - [x] Интеграционные тесты
-- [x] Использовать codecov
-- [x] Использовать Travis
-- [ ] Добавить поддержку большего числа форматов
-- [x] Исправить идентификацию формата получаемового файла
+- [x] Create application
+- [x] Create
+  - [x] Unit tests
+  - [x] Integration tests
+- [x] Start using code coverage
+- [x] Start using CI (Travis was chose)
+- [x] Fix input file format recognizing

@@ -1,6 +1,7 @@
 from flask import Flask, request, abort, render_template
 import magic
 import mimetypes
+import json
 
 from src import config, converter
 
@@ -37,10 +38,14 @@ def convert(output_type):
 def send_file_form(output_type):
     return render_template('send_file_form.html', output_type=output_type)
 
+@app.route('/get_available_conversions')
+def get_available_conversions():
+    return json.dumps(config.AVAILABLE_CONVERSIONS)
+
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html')  # change templates/index.html
 
 
 def create_app():
