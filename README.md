@@ -2,9 +2,9 @@
 [![Build Status](https://travis-ci.com/LoDThe/DocumentConverter.svg?branch=master)](https://travis-ci.com/LoDThe/DocumentConverter)
 [![codecov](https://codecov.io/gh/LoDThe/DocumentConverter/branch/master/graph/badge.svg)](https://codecov.io/gh/LoDThe/DocumentConverter)
     
-DocumentConverter is a simple realization of web-application, which purpose is converting document between different types
+DocumentConverter is a simple realization of web-application, which purpose is converting document between different filetypes.
 
-To convert a document you need to execute a POST query with file by following URL
+To convert a document you need to execute a POST request with file by following URL
 
 `http://<server-name>:<server-port>/convert/<output-type>`
 
@@ -45,10 +45,10 @@ Default arguments:
 By following link you can receive available conversions list in JSON format:
 ```http://host:port/get_available_conversions```
 
-This will run application with possibility of execution POST queries by the following URL
+This will run application with possibility of execution POST requests by the following URL
 ```http://host:port/convert/<output-type>```
 
-Query should be execute like it's user is sending file from input form with name *file*. For instance, through the html form `<input type=file name=file>`
+Request should be execute like it's user is sending file from input form with name *file*. For instance, through the html form `<input type=file name=file>`
 
 ## Available conversion types
 
