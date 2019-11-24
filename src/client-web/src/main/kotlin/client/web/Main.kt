@@ -72,6 +72,7 @@ private fun onConvertButtonClicked(file: File) {
                     val tempLink = (document.createElement("a") as HTMLAnchorElement).apply {
                         style.display = "none"
                         href = url
+                        // TODO: is there a way to get a correct filename from the server?
                         download = "${file.name}.${format.extensions.first()}"
                         innerHTML = "a"
                     }
