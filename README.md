@@ -50,6 +50,15 @@ This will run application with possibility of execution POST requests by the fol
 
 Request should be execute like it's user is sending file from input form with name *file*. For instance, through the html form `<input type=file name=file>`
 
+## Web client
+Firstly, build the client JS files:
+```shell script
+cd src/client-web
+.\gradlew runDceKotlinJs
+```
+
+After that, you can use the `http://host:port/` page to upload and covert your files.
+
 ## Available conversion types
 
 | Input format   |      Output formats      | 
