@@ -13,6 +13,8 @@ enum class Format(
     PLAIN(serverName = "plain", displayName = "Plain text", extensions = listOf("txt")),
 }
 
+internal const val DIV_UI_ID = "ui"
 internal const val INPUT_FILE_ID = "input_file"
 internal const val DIV_FORMATS_ID = "div_formats"
+internal const val DIV_FOOTER_ID = "div_formats"
 internal const val INPUT_FORMAT_NAME = "input_format_name"
