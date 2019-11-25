@@ -2,7 +2,7 @@ from flask import send_file, abort
 import pypandoc
 import io
 
-from src import config
+import config
 
 def convert_data(filename, file_data, input_type, output_type):
     """

@@ -1,5 +1,5 @@
 import werkzeug
-from src.app import get_file_extension
+from app import get_file_extension
 
 
 def get_file_data(filename):

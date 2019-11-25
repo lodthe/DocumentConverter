@@ -3,7 +3,7 @@ import magic
 import mimetypes
 import json
 
-from src import config, converter
+import config, converter
 
 app = Flask(__name__)
 

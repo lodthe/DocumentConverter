@@ -1,7 +1,7 @@
 import pytest
 
 import io
-from src.app import create_app
+from app import create_app
 
 
 @pytest.fixture
