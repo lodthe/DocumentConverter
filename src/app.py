@@ -1,4 +1,4 @@
-from flask import Flask, request, abort, render_template
+from flask import Flask, request, abort, render_template, send_from_directory
 import magic
 import mimetypes
 import json
@@ -46,6 +46,11 @@ def get_available_conversions():
 @app.route('/')
 def index():
     return render_template('index.html')  # change templates/index.html
+
+
+@app.route('/client-web/<path:path>')
+def scripts(path):
+    return send_from_directory("client-web", path)
 
 
 def create_app():
