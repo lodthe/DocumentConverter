@@ -2,22 +2,22 @@
 [![Build Status](https://travis-ci.com/LoDThe/DocumentConverter.svg?branch=master)](https://travis-ci.com/LoDThe/DocumentConverter)
 [![codecov](https://codecov.io/gh/LoDThe/DocumentConverter/branch/master/graph/badge.svg)](https://codecov.io/gh/LoDThe/DocumentConverter)
     
-DocumentConverter is a simple realization of web-application, which purpose is converting document between different filetypes.
+DocumentConverter is a simple web-application that purpose is converting document between different filetypes.
 
 To convert a document you need to execute a POST request with file by following URL
 
 `http://<server-name>:<server-port>/convert/<output-type>`
 
-You can read task description in more details [here](https://docs.google.com/document/d/1lDirPrxqhrIkkDXW3sbIWr6cRhFdlra0rSmd0RHjH8s/edit) (RUSSIAN LANGUAGE)
+You can read the task description more detaily [here](https://docs.google.com/document/d/1lDirPrxqhrIkkDXW3sbIWr6cRhFdlra0rSmd0RHjH8s/edit) (in Russian)
 
-[Flask](https://palletsprojects.com/p/flask/) was chosen as web-application creating framework, [Pandoc](https://pandoc.org/) as files convertation library.
+[Flask](https://palletsprojects.com/p/flask/) was chosen as web-application framework, [Pandoc](https://pandoc.org/) as files convertation library.
 
-There is [Travis](https://travis-ci.com) as CI and pytest as a testing tool also.
+I used [Travis](https://travis-ci.com) as CI and pytest as a testing tool.
 
 ## Requirements
 Python at least 3.7 version, installed [Pandoc](https://pandoc.org/) library and python-libraries from [requirements.txt](requirements.txt)
 
-Example of requirements installing:
+### Requirements installation examples:
 
 **Ubuntu**
 ```shell script
@@ -31,7 +31,7 @@ pip install -r requirements.txt
 ```
 
 ## How to use it?
-Execute is `src` directory
+Run in `src` directory
 ```shell script
 flask run --host=127.0.0.2 --port=1234
 ```
@@ -42,22 +42,24 @@ Default arguments:
 | host       | 127.0.0.1 |
 | port       | 5000      |
 
-By following link you can receive available conversions list in JSON format:
+The next endpoint returns supported conversion list in JSON format:
 ```http://host:port/get_available_conversions```
 
-This will run application with possibility of execution POST requests by the following URL
+By the next endpoint you can change the file's format to <output->:
 ```http://host:port/convert/<output-type>```
 
-Request should be execute like it's user is sending file from input form with name *file*. For instance, through the html form `<input type=file name=file>`
+The application tries to guess the given file's extension by themselves. 
+
+You have to execute the conversion request like it's an user is sending file from input form with the name *file*. For instance, through the html form `<input type=file name=file>`
 
 ## Web client
-Firstly, build the client JS files:
+At first, build the client JS files:
 ```shell script
 cd src/client-web
 .\gradlew runDceKotlinJs
 ```
 
-After that, you can use the `http://host:port/` page to upload and covert your files.
+Afterwards you can use `http://host:port/` page to upload and covert your files.
 
 ## Available conversion types
 
